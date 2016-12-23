@@ -1,2 +1,2 @@
 # DjangoWeb
-this is a learn project
+This is a learn project
