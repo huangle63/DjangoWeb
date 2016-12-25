@@ -31,13 +31,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'bootstrap_admin',        #一定要放在`django.contrib.admin`前面
+    'django.contrib.admin',    #默认添加后台管理功能
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'west',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,13 +55,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'djangoWeb.urls'
 
+from django.conf import global_settings
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates/west/'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -67,6 +76,8 @@ TEMPLATES = [
     },
 ]
 
+BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
+
 WSGI_APPLICATION = 'djangoWeb.wsgi.application'
 
 
@@ -74,10 +85,18 @@ WSGI_APPLICATION = 'djangoWeb.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+            'ENGINE':'django.db.backends.mysql',
+            'NAME': 'djangoweb',
+            'USER': 'root',
+            'PASSWORD': '123qwe',
+            'HOST':'localhost',
+            'PORT':'3306',
+        }
 }
 
 

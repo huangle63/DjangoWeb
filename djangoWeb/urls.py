@@ -13,9 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from djangoWeb import views
 
+# admin的超级用户 用户名：huangle63，邮箱:huangle63@163.cmo,密码：Software123
+'''
+url(regex, view, [kwargs, name])函数有四个参数, 两个是必须的:regex和view, 两个可选的:kwargs和name
+regex是regular expression的简写,这是字符串中的模式匹配的一种语法, Django 将请求的URL从上至下依次匹配列表中的正则表达式，直到匹配到一个为止。 更多正则表达式的使用可以查看Python正则表达式
+view当 Django匹配了一个正则表达式就会调用指定的view逻辑, 上面代码中会调用article/views.py中的home函数
+kwargs任意关键字参数可传一个字典至目标view
+name命名你的 URL, 使url在 Django 的其他地方使用, 特别是在模板中
+'''
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    # ^ 匹配字符串开头, $ 匹配字符串末尾,
+    url(r'^admin/', admin.site.urls),   #可以使用设置好的url进入网站后台
+    url(r'^$', views.home),             #匹配空
+    url(r'^west/', include('west.urls')),
 ]
