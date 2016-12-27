@@ -1,3 +1,9 @@
+from __future__ import absolute_import, unicode_literals
+# ^^^ The above is required if you want to import from the celery
+# library.  If you don't have this then `from celery.schedules import`
+# becomes `proj.celery.schedules` in Python 2.x since it allows
+# for relative imports by default.
+
 """
 Django settings for djangoWeb project.
 
@@ -26,6 +32,14 @@ SECRET_KEY = '0n_8q=1rg%6t@m3dhx**#*)yf%_0feuwt4!k1$0@9)3+hno3dp'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+
+
+# Celery settings
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_BROKER_URL= 'amqp://guest@localhost//'
+CELERY_RESULT_BACKEND = 'amqp://guest@localhost//'
+CELERY_TASK_SERIALIZER = 'json'
 
 
 # Application definition
@@ -122,9 +136,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
+
 
 USE_I18N = True
 
@@ -137,3 +155,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
