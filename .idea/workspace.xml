@@ -2,50 +2,48 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b05dc0b1-f12c-4b0d-88a3-7ed16e939b74" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/img/Jcrop.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/img/favicon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/img/loading.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/img/user.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/authentication/templates/auth/signup.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/core/templates/core/home.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/core/templates/core/login.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/core/templates/core/partial_settings_menu.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/core/templates/core/password.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/core/templates/core/profile.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/core/templates/core/settings.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/core/urls.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/css/bootcamp.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/js/bootcamp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/js/bootcamp.markdown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/js/ga.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/static/js/jquery.bullseye-1.0-min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/templates/403.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/templates/404.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/djangoWeb/templates/500.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/djangoWeb/views.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/admin.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/apps.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/migrations/0002_auto_20161223_0631.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/models.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/tasks.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/templatetags/custom_markdown.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/tests.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/urls.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/west/views.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/west/aboutme.html" afterPath="$PROJECT_DIR$/djangoWeb/west/templates/west/aboutme.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/west/archives.html" afterPath="$PROJECT_DIR$/djangoWeb/west/templates/west/archives.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/west/base.html" afterPath="$PROJECT_DIR$/djangoWeb/west/templates/west/base.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/west/duoshuo.html" afterPath="$PROJECT_DIR$/djangoWeb/west/templates/west/duoshuo.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/west/home.html" afterPath="$PROJECT_DIR$/djangoWeb/west/templates/west/home.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/west/post.html" afterPath="$PROJECT_DIR$/djangoWeb/west/templates/west/post.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/west/migrations/__init__.py" afterPath="$PROJECT_DIR$/djangoWeb/core/forms.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/west/templatetags/__init__.py" afterPath="$PROJECT_DIR$/djangoWeb/authentication/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/djangoWeb/settings.py" afterPath="$PROJECT_DIR$/djangoWeb/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/djangoWeb/urls.py" afterPath="$PROJECT_DIR$/djangoWeb/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manage.py" afterPath="$PROJECT_DIR$/manage.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/requirments.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/DESCRIPTION.rst" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/INSTALLER" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/METADATA" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/RECORD" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/WHEEL" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/entry_points.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/metadata.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip-8.1.1.dist-info/top_level.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/compat/ordereddict.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/__init__.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/_vendor/__init__.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/_vendor/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/basecommand.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/basecommand.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/baseparser.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/baseparser.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/cmdoptions.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/cmdoptions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/__init__.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/completion.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/completion.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/download.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/download.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/freeze.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/freeze.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/install.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/install.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/list.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/list.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/search.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/search.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/show.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/show.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/wheel.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/commands/wheel.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/compat/__init__.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/compat/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/download.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/download.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/exceptions.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/exceptions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/index.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/index.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/locations.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/locations.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/operations/freeze.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/operations/freeze.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/pep425tags.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/pep425tags.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/req/req_file.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/req/req_file.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/req/req_install.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/req/req_install.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/req/req_set.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/req/req_set.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/__init__.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/appdirs.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/appdirs.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/deprecation.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/deprecation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/setuptools_build.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/utils/setuptools_build.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/vcs/__init__.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/vcs/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/vcs/git.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/vcs/git.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/vcs/subversion.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/vcs/subversion.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/wheel.py" afterPath="$PROJECT_DIR$/venv/lib/python3.5/site-packages/pip/wheel.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -77,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/djangoWeb/core/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="295">
-              <caret line="65" column="22" lean-forward="true" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
+              <caret line="65" column="22" lean-forward="false" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -99,7 +97,7 @@
         <entry file="file://$PROJECT_DIR$/djangoWeb/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="24" column="3" lean-forward="true" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
+              <caret line="24" column="3" lean-forward="false" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
               <folding>
                 <element signature="e#643#684#0" expanded="true" />
               </folding>
@@ -759,7 +757,7 @@
     <entry file="file://$PROJECT_DIR$/djangoWeb/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="24" column="3" lean-forward="true" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
+          <caret line="24" column="3" lean-forward="false" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
           <folding>
             <element signature="e#643#684#0" expanded="true" />
           </folding>
@@ -777,7 +775,7 @@
     <entry file="file://$PROJECT_DIR$/djangoWeb/core/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
-          <caret line="65" column="22" lean-forward="true" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
+          <caret line="65" column="22" lean-forward="false" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
