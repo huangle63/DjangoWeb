@@ -19,9 +19,10 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# os.path.abspath(__file__)  本文件所在的绝对路径
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))    #文件所在的目录
+BASE_DIR = os.path.dirname(PROJECT_ROOT)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -47,14 +48,16 @@ CELERY_TASK_SERIALIZER = 'json'
 INSTALLED_APPS = [
     'bootstrap_admin',        #一定要放在`django.contrib.admin`前面
     'django.contrib.admin',    #默认添加后台管理功能
-    'django.contrib.auth',
+    'django.contrib.auth',     #管理用户的模块
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'west',
+    'djangoWeb.west',
+    'djangoWeb.core',
+    'djangoWeb.authentication',
+    'django_celery_beat',   #在admin管理页面中可以创建定时任务
 ]
-
 
 
 MIDDLEWARE = [
@@ -69,12 +72,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'djangoWeb.urls'
 
-from django.conf import global_settings
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates/west/'),
+            os.path.join(PROJECT_ROOT, 'templates'),
+            # os.path.join(BASE_DIR, 'templates/west/'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -151,9 +155,33 @@ USE_L10N = True
 USE_TZ = True
 
 
+# AUTH_USER_MODEL = "authentication.Profile"
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
+
+# @login_required标签,其作用就是告诉程序，使用这个方法是要求用户登录的
+# 如果用户还没有登录，默认会跳转到‘/accounts/login/’。这个值可以在settings文件中通过LOGIN_URL参数来设定
+# LOGIN_REDIRECT_URL 登录成功之后跳转的页面
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+# 保存上传的图片位置
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+ALLOWED_SIGNUP_DOMAINS = ['*']
+
+# session在服务器的有效时间为30分钟
+# 会话cookie可以在用户浏览器中保持有效期。True：关闭浏览器，则Cookie失效。
+SESSION_COOKIE_AGE = 60*30
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 

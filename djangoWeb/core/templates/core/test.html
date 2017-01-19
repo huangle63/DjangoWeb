@@ -1,0 +1,49 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+    <button id="button_A">tt</button>
+
+    <script src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    <script>
+        var click_A = function(){
+            alert($("#button_A").text);
+        }
+
+
+        $(function() {
+            var ajaxA = function() {
+                var jsonObj = {
+                    username: 'huangele',
+                    password: '123',
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/settings/t/',
+                    data: {dataJson: JSON.stringify(jsonObj)},
+                    //dataType: 'json',
+                    success: function(data,status) {
+                        alert("数据: " + data + "\n状态: " + status);
+                    },
+                    error: function(data) {
+                        alert(data);
+                    }
+                });
+
+            };
+
+            $("#button_A").on("click", ajaxA);
+
+        });
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+    </script>
+</body>
+</html>
