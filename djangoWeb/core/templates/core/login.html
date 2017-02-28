@@ -1,45 +1,100 @@
-{% extends 'base.html' %}
-{% load i18n %}
 {% load staticfiles %}
 
-{% block head %}
-  <link href="{% static 'css/cover.css' %}" rel="stylesheet">
-{% endblock head %}
-
-{% block body %}
-  <div class="cover">
-    <h1 class="logo">DjangoWeb</h1>
-    {% if form.non_field_errors %}
-      {% for error in form.non_field_errors %}
-        <div class="alert alert-danger alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          {{ error }}
-        </div>
-      {% endfor %}
-    {% endif %}
-    <div class="login">
-      <h2>{% trans 'Log in' %}</h2>
-      <form method="post" action="{% url 'login' %}" role="form">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>海信登录</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <h1>海信登录</h1>
+    <form id="loginform">
         {% csrf_token %}
-        <div class="form-group{% if form.username.errors %} has-error{% endif %}">
-          <label for="username">{% trans 'Username' %}</label>
-          <input type="text" class="form-control" id="username" name="username">
-          {% for error in form.username.errors %}
-            <label class="control-label">{{ error }}</label>
-          {% endfor %}
+        <div class="item">
+            <label class="login-label">账号</label>
+            <input id="email" name="form_email" type="text" class="basic-input" maxlength="60" value="邮箱/手机号/用户名" onfocus="javascript:if(this.value=='邮箱/手机号/用户名')this.value=''"  tabindex="1">
+            <span id="form_email_err" style="display: none;" class="validate-error">请输入正确的邮箱/手机号/用户名</span>
         </div>
-        <div class="form-group{% if form.password.errors %} has-error{% endif %}">
-          <label for="password">{% trans 'Password' %}</label>
-          <input type="password" class="form-control" id="password" name="password">
-          {% for error in form.password.errors %}
-            <label class="control-label">{{ error }}</label>
-          {% endfor %}
+        <div class="item">
+            <label class="login-label">密码</label>
+            <input id="password" name="form_password" type="password" class="basic-input" maxlength="20" tabindex="2">
+            <span id="form_password_err" style="display: none;" class="validate-error">请输入密码</span>
         </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{% trans 'Log in' %}</button>
-          <a href="{% url 'signup' %}" class="btn btn-link">{% trans 'Sign up' %}</a>
+        <div class="item">
+            <label class="login-label">&nbsp;</label>
+            <span id="error-message" style="display: none;" class=" validate-error">帐户名或登录密码不正确，请重新输入</span>
         </div>
-      </form>
-    </div>
-  </div>
-{% endblock body %}
+        <div class="item">
+            <label class="login-label">&nbsp;</label>
+            <p>
+                <input id="remember" name="remember" type="checkbox" tabindex="4">
+                <label for="remember">下次自动登录</label>
+                |
+                <a href="#">忘记密码了</a>
+            </p>
+        </div>
+        <div>
+            <label class="login-label">&nbsp;</label>
+            <button id="login" name="form_login" type="button" class="btn-login" tabindex="5">登录</button>
+        </div>
+
+    </form>
+    <button id="button_A">tt</button>
+    <a href="/iqc/upload-data">iqc</a>
+
+    <script src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    <script>
+        var validateForm1 = function(){
+            var loginForm = document.getElementById('loginform');
+            if(loginForm.email.value == "" || loginForm.email.value == "邮箱/手机号/用户名"){
+                document.getElementById('form_email_err').style.display = "inline";
+                document.getElementById('form_password_err').style.display = "inline";
+                return false;
+            }
+        }
+
+
+        $(function() {
+            function validateForm() {
+                $('#form_email_err').hide();
+                $('#form_password_err').hide();
+                $('#error-message').hide();
+                var loginForm = document.getElementById('loginform');
+                if(loginForm.email.value == "" || loginForm.email.value == "邮箱/手机号/用户名"){
+                    document.getElementById('form_email_err').style.display = "inline";
+                    //document.getElementById('form_password_err').style.display = "inline";
+                    return false;
+                }
+                var jsonObj = {
+                    email: $('#email').val(),
+                    password: $('#password').val(),
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '/login/',
+                    //data: {dataJson: JSON.stringify(jsonObj)},
+                    data: $('#loginform').serialize(),
+                    //dataType: 'json',
+                    success: function(result,status) {
+                        //alert("数据: " + result + "\n状态: " + status);
+                        if(result == "invalid user"){
+                            document.getElementById('password').value = "";
+                            document.getElementById('error-message').style.display = "inline";
+                        }else{
+                            location.href = "/"
+                        }
+                    },
+                    error: function(result) {
+                        alert("error:"+result.responseText);
+                    }
+                });
+
+            };
+
+            $("#login").on("click", validateForm);
+
+        });
+    </script>
+</body>
+</html>

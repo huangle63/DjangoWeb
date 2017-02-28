@@ -1,0 +1,83 @@
+{% extends 'base-iqc.html' %}
+{% load staticfiles %}
+
+{% block head %}
+    <title>IQC 上传数据</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sheetjs.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/alertify.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/handsontable.full.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/themes/semantic.min.css' %}">
+    <style type="text/css">
+        .btn-upload {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 6px 26px;
+            border-radius: 3px;
+            /*color: #999;*/
+            background: #C0A16B;
+            border: 1px solid #b9b9b9;
+        }
+        button:hover {
+            background: #C1E2B3;
+        }
+    </style>
+{% endblock head %}
+
+{% block main %}
+
+    <div id="left">
+			<div id="drop">Drop a Excel file here</div>
+			<h3>Choose a worksheet:</h3>
+			<div id="buttons"></div>
+    </div>
+    <div id="right">
+        <div>
+            <button id="btn-upload" type="button" class="btn-upload">上传数据</button>
+        </div>
+        <div id="hot" style="overflow: scroll;" class="handsontable"></div>
+    </div>
+{% endblock main %}
+
+{% block scripts %}
+    <script src="{% static 'js/handsontable.full.min.js' %}"></script>
+    <script src="{% static 'js/shim.js' %}"></script>
+    <script src="{% static 'js/jszip.js' %}"></script>
+    <script src="{% static 'js/xls.js' %}"></script>
+    <script src="{% static 'js/xlsx.js' %}"></script>
+    <script src="{% static 'js/dropsheet.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!--alertify.js 用于弹出自定义警告框-->
+    <script src="{% static 'js/alertify.min.js' %}"></script>
+    <!--spin.js 用于做Ajax 异步请求的时候，一般都会利用一个动态的 Gif 小图片来制作一个Ajax Loading -->
+    <script src="{% static 'js/spin.js' %}"></script>
+    <script>
+        $(function() {
+            $.ajaxSetup({
+              data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+            });
+            $("#btn-upload").click(function() {
+				if(hotHandsontable.countRows() <= 1){
+                    alertify.alert("请导入数据");
+                }else{
+                    $.ajax({
+                        type:"POST",
+                        url:"/iqc/upload-data/",
+                        data:{exceldata: JSON.stringify(hotHandsontableData)},
+                        success: function(data,status) {
+                            var resultData = $.parseJSON(data);
+                            if(resultData.success == false){
+                                alertify.alert("上传数据", resultData.message);
+                            }else{
+                            	alertify.alert("上传数据", "导入数据成功");
+                            }
+                        },
+                        error: function(data) {
+                            alertify.alert("上传数据", data);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock scripts%}

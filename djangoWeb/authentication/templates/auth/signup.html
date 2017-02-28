@@ -1,32 +1,96 @@
-{% extends 'base.html' %}
-{% load i18n %}
 {% load staticfiles %}
 
-{% block head %}
-  <link href="{% static 'css/signup.css' %}" rel="stylesheet">
-{% endblock head %}
-
-{% block body %}
-  <div class="cover">
-  <h1 class="logo"><a href="{% url 'home' %}">DiangoWeb</a></h1>
-  <div class="signup">
-    <h2>{% trans 'Sign up for DiangoWeb' %}</h2>
-    <form action="{% url 'signup' %}" method="post" role="form">
-      {% csrf_token %}
-      {% for field in form.visible_fields %}
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
-          <label for="{{ field.label }}">{{ field.label }}</label>
-          {{ field }}
-          {% if field.help_text %}
-            <span class="help-block">{{ field.help_text|safe }}</span>
-          {% endif %}
-          {% for error in field.errors %}
-            <label class="control-label">{{ error }}</label>
-          {% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎注册</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+    <h1>欢迎注册</h1>
+    <form id="regform">
+        {% csrf_token %}
+        <div class="item">
+            <label>用户名</label>
+            <input id="user" name="form_user" type="text" class="basic-input" maxlength="60" placeholder="用户名"  tabindex="1">
+            <span id="form_user_err" style="display: none;" class="validate-error">用户名已存在</span>
         </div>
-      {% endfor %}
-      <button type="submit" class="btn btn-primary btn-lg">{% trans 'Create an account' %}</button>
+        <div class="item">
+            <label>邮箱</label>
+            <input id="email" name="form_email" type="text" class="basic-input" maxlength="60" placeholder="邮箱" tabindex="3">
+            <span id="form_email_err" style="display: none;" class="validate-error">邮箱已存在</span>
+        </div>
+        <div class="item">
+            <label>密码</label>
+            <input id="password" name="form_password" type="password" class="basic-input" placeholder="密码" maxlength="20" tabindex="5">
+            <span id="form_password_err" style="display: none;" class="validate-error">请输入密码</span>
+        </div>
+        <div class="item">
+            <label>确认密码</label>
+            <input id="password_confirm" name="form_confirm_password" type="password" class="basic-input" placeholder="请再次输入上面密码" maxlength="20" tabindex="7">
+            <span id="form_password_confirm_err" style="display: none;" class="validate-error">两次密码不一致</span>
+        </div>
+        <div>
+        	<label>&nbsp;</label>
+            <button id="regbtn" name="form_submit" type="button"  class="btn-submit" tabindex="9">注册</button>
+            <span id="form_submit_err" style="display: none;"></span>
+        </div>
+
     </form>
-  </div>
-  </div>
-{% endblock body %}
+
+    <script src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    <script src="{% static 'js/signup.js' %}"></script>
+    <script>
+      $(function() {
+        $.ajaxSetup({
+          data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+      });
+    </script>
+    <!--<script type="text/javascript" src="js/jquery-1.12.3.min.js" ></script>-->
+    <!--<script type="text/javascript" src="js/signup.js" ></script>-->
+    <!--<script>
+        $(function() {
+            function validateForm() {
+                var regForm = document.getElementById('regform');
+                if(regForm.user.value == "" || regForm.user.value == "用户名"){
+                    document.getElementById('form_user_err').value = "请输入用户名";
+                    document.getElementById('form_user_err').style.display = "inline";
+                    return false;
+                }
+                var jsonObj = {
+                    email: $('#email').val(),
+                    password: $('#password').val(),
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '/settings/checkuser/',
+                    //data: {dataJson: JSON.stringify(jsonObj)},
+                    data: $('#loginform').serialize(),
+                    //dataType: 'json',
+                    success: function(result,status) {
+                        //alert("数据: " + result + "\n状态: " + status);
+                        if(result == "invalid user"){
+                            document.getElementById('password').value = "";
+                            document.getElementById('error-message').style.display = "inline";
+                        }else{
+                            location.href = "/"
+                        }
+                    },
+                    error: function(result) {
+                        alert("error:"+result.responseText);
+                    }
+                });
+
+            };
+
+            $("#login").on("click", validateForm);
+
+        });
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+    </script>-->
+</body>
+</html>

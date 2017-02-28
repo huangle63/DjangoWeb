@@ -32,7 +32,7 @@ SECRET_KEY = '0n_8q=1rg%6t@m3dhx**#*)yf%_0feuwt4!k1$0@9)3+hno3dp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','www.software.com','192.168.62.128','10.18.78.165']
 
 
 
@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djangoWeb.west',
     'djangoWeb.core',
+    'djangoWeb.iqc',
+    'djangoWeb.jiradata',
     'djangoWeb.authentication',
     'django_celery_beat',   #在admin管理页面中可以创建定时任务
 ]
@@ -151,8 +153,9 @@ TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 
 USE_L10N = True
-
-USE_TZ = True
+# 如果不需要在程序中特别处理时区（timezone-aware），
+# 在Django项目的settings.py文件中，可以直接设置为“USE_TZ = False”就省心了
+USE_TZ = False
 
 
 # AUTH_USER_MODEL = "authentication.Profile"

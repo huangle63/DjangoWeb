@@ -1,12 +1,26 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.utils.translation import ugettext_lazy as _
 
 from .forms import SignUpForm
 
+
 # Create your views here.
 def signup(request):
+    if request.method != 'POST':
+        return render(request, 'auth/signup.html')
+    username = request.POST.get('form_user')
+    email = request.POST.get('form_email')
+    password = request.POST.get('form_password')
+    User.objects.create_user(username=username, password=password,
+                             email=email)
+    user = authenticate(username=username, password=password)
+    login(request, user)
+    return HttpResponse('注册成功')
+
+
+def signupM(request):
     if request.method != 'POST':
         return render(request, 'auth/signup.html', {'form': SignUpForm()})
     # form类的运行顺序是init，clean，validte，save
@@ -29,3 +43,4 @@ def signup(request):
     # Feed.objects.create(user=user, post=welcome_post)
 
     return redirect('/')
+

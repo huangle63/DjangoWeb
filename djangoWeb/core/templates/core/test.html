@@ -7,19 +7,50 @@
     <title>Test</title>
 </head>
 <body>
+    <h1>海信登录</h1>
+    <form id="loginform" name="loginform" method="post" onsubmit="return validateForm1()" action="/settings/loginC/">
+        {% csrf_token %}
+        <div>
+            <label>账号</label>
+            <input id="email" name="form_email" type="text" maxlength="60" value="邮箱/手机号/用户名" onfocus="javascript:if(this.value=='邮箱/手机号/用户名')this.value=''"  tabindex="1">
+            <span id="form_email_err" style="display: none;">请输入正确的邮箱/手机号/用户名</span>
+        </div>
+        <div>
+            <label>密码</label>
+            <input id="password" name="form_password" type="password" maxlength="20" tabindex="2">
+            <span id="form_password_err" style="display: none;">请输入密码</span>
+        </div>
+        <div>
+            <p>
+                <input type="checkbox" id="remember" name="remember" tabindex="4">
+                <label for="remember">下次自动登录</label>
+                |
+                <a href="#">忘记密码了</a>
+            </p>
+        </div>
+        <div>
+            <input type="submit" value="登录" name="login" tabindex="5">
+        </div>
+
+    </form>
     <button id="button_A">tt</button>
 
     <script src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script>
-        var click_A = function(){
-            alert($("#button_A").text);
+        var validateForm1 = function(){
+            var loginForm = document.getElementById('loginform');
+            if(loginForm.email.value == "" || loginForm.email.value == "邮箱/手机号/用户名"){
+                document.getElementById('form_email_err').style.display = "inline";
+                document.getElementById('form_password_err').style.display = "inline";
+                return false;
+            }
         }
 
 
         $(function() {
-            var ajaxA = function() {
+            function validateForm() {
                 var jsonObj = {
-                    username: 'huangele',
+                    username: 'letu',
                     password: '123',
                 };
 
@@ -38,7 +69,7 @@
 
             };
 
-            $("#button_A").on("click", ajaxA);
+            $("#button_A").on("click", validateForm);
 
         });
         $.ajaxSetup({

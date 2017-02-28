@@ -1,0 +1,48 @@
+h1 {
+	display: block;
+}
+
+.item {
+	clear: both;
+	margin: 15px 0;
+}
+
+.basic-input {
+	width: 200px;
+	padding: 5px;   /*内边距就是元素内容周围，边框以内的空间*/
+	height: 18px;
+	font-size: 14px;
+	border-radius: 3px;  /*给div元素添加圆角的边框*/
+	border: 1px solid #c9c9c9;  /*设置四个边框样式*/
+}
+
+.login-label {
+	/*display: inline-block;*/
+	float: left;
+	margin-right: 15px;
+	text-align: right;
+	width: 60px;
+	font-size: 14px;
+	line-height: 30px;
+	vertical-align: middle;
+}
+
+.btn-login {
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 6px 26px;
+	border-radius: 3px;
+	/*color: #999;*/
+	background: #C0A16B;
+	border: 1px solid #b9b9b9;
+}
+
+button:hover {
+	background: #C1E2B3;
+}
+
+.validate-error {
+	font-size: 10px;
+	color: red;
+}

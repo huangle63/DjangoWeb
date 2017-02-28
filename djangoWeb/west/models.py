@@ -3,8 +3,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-# Create your models here.
 
+# Create your models here.
 class Article(models.Model) :
     title = models.CharField(max_length = 100)  #博客题目
     category = models.CharField(max_length = 50, blank = True)  #博客标签
@@ -21,4 +21,5 @@ class Article(models.Model) :
         return self.title
 
     class Meta:  #按时间下降排序
+        # ordering字段是告诉Django模型对象返回的记录结果集是依照哪个字段排序的
         ordering = ['-date_time']

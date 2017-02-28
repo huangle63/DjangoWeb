@@ -1,0 +1,48 @@
+{% extends 'base-jira.html' %}
+{% load staticfiles %}
+
+{% block head %}
+    <title>JIRA 查询数据</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sheetjs.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/alertify.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/handsontable.full.min.css' %}">
+{% endblock head %}
+
+{% block main %}
+
+    <div class="input-group">
+        <span class="input-group-addon">JIRA账号</span>
+        <input type="text" class="form-control" placeholder="Username" id="input-username">
+        <span class="input-group-addon">密码</span>
+        <input type="password" class="form-control" placeholder="Code" id="input-code">
+        <span class="input-group-addon">项目编号</span>
+        <input type="text" class="form-control" placeholder="ID" id="input-id">
+        <span class="input-group-addon">产品机型</span>
+        <input type="text" class="form-control" placeholder="model;model" id="input-model" style="width:250px;">
+        <div class="input-group-btn">
+            <button id="btn-search" type="button" class="btn btn-default">查询</button>
+        </div>
+        <div class="input-group-btn">
+            <button id="btn-export" type="button" class="btn btn-default" disabled="disabled">导出</button>
+        </div>
+    </div>
+
+    <div id="hot" style="overflow: scroll; height:350px; margin:20px;" class="handsontable"></div>
+
+{% endblock main %}
+
+{% block scripts %}
+    <script src="{% static 'js/handsontable.full.min.js' %}"></script>
+    <!--alertify.js 用于弹出自定义警告框-->
+    <script src="{% static 'js/alertify.min.js' %}"></script>
+    <!--spin.js 用于做Ajax 异步请求的时候，一般都会利用一个动态的 Gif 小图片来制作一个Ajax Loading -->
+    <script src="{% static 'js/spin.js' %}"></script>
+    <script src="{% static 'js/myJira.js' %}"></script>
+    <script>
+        $(function() {
+            $.ajaxSetup({
+              data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+            });
+        });
+    </script>
+{% endblock scripts%}
