@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/sheetjs.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/alertify.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/handsontable.full.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Timeline.css' %}">
 {% endblock head %}
 
 {% block main %}
@@ -13,18 +14,23 @@
     <div id="left">
         <a id="search-scpc" class="btn btn-default btn-search-scpc">按生成批次查询</a>
 		<a id="search-tm" class="btn btn-default btn-search-tm">按条码查询</a>
+        <a id="search-timeline" class="btn btn-default btn-search-tm">时间轴</a>
     </div>
     <div id="right">
-        <div id="item-box">
-            <label class="control-label" for="dropdown-scpc">生成批次</label>
-            <div class="bootstrap-select">
-                <select name="dropdown-scpc" class="selectpicker" data-size="5" id="dropdown-scpc" data-width="150px" data-live-search="true">
-                    <option> </option>
-                </select>
-            </div>
-            <button type="button" class="btn btn-default">查询</button>
+        <div id="container1" class="container" style="display: stock;">
+        	<div id="item-box">
+	            <label class="control-label" for="dropdown-scpc">生成批次</label>
+	            <div class="bootstrap-select">
+	                <select name="dropdown-scpc" class="selectpicker" data-size="5" id="dropdown-scpc" data-width="150px" data-live-search="true">
+	                    <option> </option>
+	                </select>
+	            </div>
+	            <button type="button" class="btn btn-default">查询</button>
+	        </div>
+	        <div id="hot" style="overflow: scroll;" class="handsontable"></div>
         </div>
-        <div id="hot" style="overflow: scroll;" class="handsontable"></div>
+        <iframe id="container2" frameborder="0" width="810px" height="1000px" marginwidth="10px">
+        </iframe>
     </div>
 {% endblock main %}
 
@@ -45,6 +51,16 @@
             $.ajaxSetup({
               data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
             });
+            $("#search-scpc").click(function() {
+            	$("#container1").show();
+            	$("#container2").hide();
+            });
+            $("#search-timeline").click(function() {
+            	$("#container1").hide();
+    			$("#container2").show();
+            	$("#container2").attr('src', "/iqc/timeline/");
+            });
+
             $("#btn-upload").click(function() {
 				if(hotHandsontable.countRows() <= 1){
                     alertify.alert("请导入数据");
@@ -52,14 +68,9 @@
                     $.ajax({
                         type:"POST",
                         url:"/iqc/upload-data/",
-                        data:{exceldata: JSON.stringify(hotHandsontableData)},
                         success: function(data,status) {
                             var resultData = $.parseJSON(data);
-                            if(resultData.success == false){
-                                alertify.alert("上传数据", resultData.message);
-                            }else{
-                            	alertify.alert("上传数据", "导入数据成功");
-                            }
+
                         },
                         error: function(data) {
                             alertify.alert("上传数据", data);

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cas_ng',
     'djangoWeb.west',
     'djangoWeb.core',
     'djangoWeb.iqc',
@@ -71,6 +72,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django_cas_ng.backends.CASBackend',
+]
+
+# CAS
+CAS_SERVER_URL = 'http://172.16.96.61/cas/login'
+# CAS_REDIRECT_URL = '/'
+CAS_IGNORE_REFERER = True    # If True, logging out of the application will always send the user to the URL specified by CAS_REDIRECT_URL.
+CAS_LOGOUT_COMPLETELY = False   # If False, logging out of the application won't log the user out of CAS as well.
+# CAS_RETRY_LOGIN = True
+CAS_LOGIN_MSG = "登录成功.欢迎 %s."
+
 
 ROOT_URLCONF = 'djangoWeb.urls'
 
@@ -188,3 +203,6 @@ ALLOWED_SIGNUP_DOMAINS = ['*']
 SESSION_COOKIE_AGE = 60*30
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+IQC_SEARCH_LIST = ['gudongge@hisense.com']
+
+IQC_UPLOAD_LIST = ['huangle@hisense.com']

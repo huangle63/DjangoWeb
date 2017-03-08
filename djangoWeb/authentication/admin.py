@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 from .models import Profile
-from ..iqc.models import IQCDataCVTE6486COPY
+from ..iqc.models import IQCDataCVTE6486COPY, IQCUploadRecord
 
 
 '''
@@ -32,8 +32,13 @@ class UserAdmin(UserAdmin):
 class IQCDataCVTE6486COPYAdmin(admin.ModelAdmin):
     list_display = ('id', 'tm', 'scpc','cssj')
 
+
+class IQCUploadRecordAdmin(admin.ModelAdmin):
+    list_display = ('id', 'person', 'upload_num','upload_time')
+
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 admin.site.register(IQCDataCVTE6486COPY,IQCDataCVTE6486COPYAdmin)
+admin.site.register(IQCUploadRecord, IQCUploadRecordAdmin)

@@ -10,7 +10,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User)
     url = models.CharField(max_length=50, null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
+    employee_id = models.CharField(max_length=50, null=True, blank=True)   #员工编码
     job_title = models.CharField(max_length=50, null=True, blank=True)
+    department = models.CharField(max_length=50, null=True, blank=True)
+    telephone_num = models.CharField(max_length=50, null=True, blank=True)
+    mobile_num = models.CharField(max_length=50, null=True, blank=True)
+    id_card = models.CharField(max_length=50, null=True, blank=True)  #身份证号
     picture_url = models.CharField(max_length=120, null=True, blank=True)
 
     def get_url(self):

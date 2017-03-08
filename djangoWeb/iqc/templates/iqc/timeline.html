@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link type="text/css" href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/Timeline.css' %}">
+	</head>
+	<body>
+		<div class="page-header">
+		        <h1 id="timeline">记录</h1>
+		    </div>
+		    <ul id="timeline_content" class="timeline">
+		    	{% for item in result_timeline %}
+		    		<li class="{% cycle '' 'timeline-inverted' %}">
+		    			<div class="timeline-badge info"><i class="glyphicon glyphicon-plus"></i></div>
+			           	<div class="timeline-panel">
+				            <div class="timeline-heading" >
+				            	<h4 class="timeline-title"><i class="glyphicon glyphicon-user"></i>  {{ item.person.first_name }}
+				            	<div class="btn-group" >
+									<i class="glyphicon glyphicon-th-large" style="cursor:pointer;" data-toggle="dropdown"><span class="caret"></span></i>
+					                <ul class="dropdown-menu" role="menu" >
+					                	<li style="margin: 10px;"><p><small class="text-muted"><i class="glyphicon glyphicon-phone-alt"></i>  {{ item.person.profile.telephone_num}}</small></p></li>
+				            			<li style="margin: 10px;"><p><small class="text-muted"><i class="glyphicon glyphicon-earphone"></i>  {{ item.person.profile.mobile_num}}</small></p></li>
+				            			<li style="margin: 10px;"><p><small class="text-muted"><i class="glyphicon glyphicon-briefcase"></i>  {{ item.person.profile.department}}</small></p></li>
+					                </ul>
+					            </div></h4>
+				            	<p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ item.upload_time }}</small></p>
+				            </div>
+				            <div class="timeline-body">
+				            	<p>导入数量  {{ item.upload_num }} .</p>
+				            </div>
+			          	</div>
+		    		</li>
+		    	{% empty %}
+		    		<li>空</li>
+		    	{% endfor %}
+		    </ul>
+		<script type="text/javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
+    	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	</body>
+</html>

@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 from django.http import StreamingHttpResponse
 from jira import JIRA, JIRAError
 import json, time
-from openpyxl import Workbook, load_workbook
+from openpyxl import load_workbook
 from openpyxl.compat import range
 from openpyxl.styles import Font, Alignment
 from django.utils.http import urlquote

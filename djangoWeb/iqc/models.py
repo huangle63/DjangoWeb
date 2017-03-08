@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.contrib import admin
 
 
@@ -25,6 +26,15 @@ class IQCDataCVTE6486COPY(models.Model):
     def __str__(self):
         return self.tm
 
+    class Meta:
+        permissions =(
+            ("search_IQCDataCVTE6486COPY","can see data"),
+            ("upload_IQCDataCVTE6486COPY","can upload data"),
+        )
 
 
+class IQCUploadRecord(models.Model):
+    person = models.ForeignKey(User, related_name='person_upload_record')
+    upload_num = models.IntegerField(verbose_name="上传数量")
+    upload_time = models.DateTimeField(auto_now_add=True, verbose_name="上传时间")
 

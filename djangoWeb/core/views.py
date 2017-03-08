@@ -1,15 +1,49 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect
+from django.conf import settings
+from ..authentication.models import Profile
 import json
-
 from .forms import ProfileForm, ChangePasswordForm
 
 
 # Create your views here.
 def home(request):
+    if request.GET.get('message', '') == 'login':
+        messages.warning(request, "请登录系统！！！")
+    elif request.GET.get('message', '') == 'permission':
+        messages.warning(request, "无权限打开此页面！！！")
+    cas_result = request.session.get('attributes')
+    cas_created = request.session.get('created')
+    if cas_created:
+        Profile.objects.filter(user=request.user).update(location=cas_result['postalAddress'], employee_id=cas_result['usercode'],
+                           job_title=cas_result['title'], department=cas_result['o'],
+                           telephone_num=cas_result['telephoneNumber'], mobile_num=cas_result['mobile'],
+                           id_card=cas_result['idNumber'])
+        if cas_result['postalAddress'] in settings.IQC_SEARCH_LIST:
+            pass
+        if cas_result['postalAddress'] in settings.IQC_UPLOAD_LIST:
+            group = Group.objects.get(name='iqc_group')
+            request.user.groups.add(group)
     return render(request, 'core/home.html')
+
+
+# def _add_locale(request, response):
+#     """If the given HttpResponse is a redirect to CAS, then add the proper
+#     `locale` parameter to it (and return the modified response). If not, simply
+#     return the original response."""
+#
+#     if (
+#         isinstance(response, HttpResponseRedirect)
+#         and response['Location'].startswith(settings.CAS_SERVER_URL)
+#     ):
+#         url = response['Location']
+#         url += '&' if '?' in url else '&'
+#         url += "locale=%s" % request
+#         response['Location'] = url
+#     return response
 
 
 # 登录函数
@@ -93,7 +127,7 @@ def profile(request, username):
 
 
 @login_required
-def settings(request):
+def user_settings(request):
     user = request.user
     print(user.username)
     if request.method == 'POST':
