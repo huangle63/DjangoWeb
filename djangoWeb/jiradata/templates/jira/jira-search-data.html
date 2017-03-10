@@ -1,10 +1,10 @@
 {% extends 'base-jira.html' %}
 {% load staticfiles %}
 
+{% block title %}JIRA 查询数据{% endblock %}
+
 {% block head %}
-    <title>JIRA 查询数据</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/sheetjs.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/alertify.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/handsontable.full.min.css' %}">
 {% endblock head %}
 
@@ -33,8 +33,6 @@
 
 {% block scripts %}
     <script src="{% static 'js/handsontable.full.min.js' %}"></script>
-    <!--alertify.js 用于弹出自定义警告框-->
-    <script src="{% static 'js/alertify.min.js' %}"></script>
     <!--spin.js 用于做Ajax 异步请求的时候，一般都会利用一个动态的 Gif 小图片来制作一个Ajax Loading -->
     <script src="{% static 'js/spin.js' %}"></script>
     <script src="{% static 'js/myJira.js' %}"></script>

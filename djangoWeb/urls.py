@@ -19,6 +19,8 @@ from django.contrib.auth import views as auth_views
 import django_cas_ng.views
 from djangoWeb.core import views as core_views
 from djangoWeb.authentication import views as authentication_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 # admin的超级用户 用户名：huangle63，邮箱:huangle63@163.cmo,密码：Software123
 # 普通用户letu，密码123
@@ -45,9 +47,9 @@ urlpatterns = [
     url(r'^validate/', include('djangoWeb.core.urls')),
     url(r'^iqc/',include('djangoWeb.iqc.urls')),
     url(r'^jira/',include('djangoWeb.jiradata.urls')),
+    url(r'^gongyi/',include('djangoWeb.gyhandover.urls')),
     url(r'^test/',core_views.test, name='test'),
     url(r'^(?P<username>[^/]+)/$', core_views.profile, name='profile'),
 
-
     url(r'^west/', include('djangoWeb.west.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

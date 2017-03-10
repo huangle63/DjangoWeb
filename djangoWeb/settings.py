@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'djangoWeb.core',
     'djangoWeb.iqc',
     'djangoWeb.jiradata',
+    'djangoWeb.gyhandover',
     'djangoWeb.authentication',
     'django_celery_beat',   #在admin管理页面中可以创建定时任务
 ]

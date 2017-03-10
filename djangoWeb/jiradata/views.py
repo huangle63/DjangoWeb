@@ -7,6 +7,7 @@ from openpyxl.compat import range
 from openpyxl.styles import Font, Alignment
 from django.utils.http import urlquote
 from django.conf import settings
+from .models import JiraSearchRecord, JiraDownloadRecord
 
 
 # Create your views here.
@@ -16,8 +17,11 @@ def search_data(request):
         code = request.POST.get('JIRACode')
         projectId = request.POST.get('ProjectId')
         model = request.POST.get('Model')
+        model_temp = model.split(';')
+        if '' in model_temp:
+            model_temp.remove('')
         Model = ''
-        for item in model.split(';'):
+        for item in model_temp:
             Model = Model + '产品机型~ "' + item + '" OR '
         result = {
             'success': False,
@@ -34,139 +38,143 @@ def search_data(request):
                                                                            '(issuetype in ("CTA Bug","OA Bug", "SW Bug", "SWD Bug ", "UE Bug") OR '
                                                                            '(issuetype = "TE Bug " AND ("缺陷来源(TE)" in (软件)))OR (issuetype = "NC Bug" AND NC类别 = 软件NC)) AND '
                                                                            'priority in (Safety, Critical, Major, Normal, Minor) AND status in (Reopened, Pending, Validating, Resolved, Open) '
-                                                                           'ORDER BY priority DESC, created DESC', maxResults=100000)
+                                                                           'ORDER BY key DESC, priority DESC, created DESC', maxResults=100000)
             else:
                 issues_in_proj = jira_proj.search_issues('project = ' + projectId + ' AND '
                                                          '(' + Model[:-4] +') AND '
                                                          '(issuetype in ("CTA Bug","OA Bug", "SW Bug", "SWD Bug ", "UE Bug") OR '
                                                          '(issuetype = "TE Bug " AND ("缺陷来源(TE)" in (软件)))OR (issuetype = "NC Bug" AND NC类别 = 软件NC)) AND '
                                                          'priority in (Safety, Critical, Major, Normal, Minor) AND status in (Reopened, Pending, Validating, Resolved, Open) '
-                                                         'ORDER BY priority DESC, created DESC', maxResults=100000)
+                                                         'ORDER BY key DESC, priority DESC, created DESC', maxResults=100000)
             store_list = []     # 运营问题列表
             ue_list = []        # UE问题列表
             for issue in issues_in_proj:
-                # 遗留问题列表
-                result_data = {}
-                result_data['项目'] = projectId
-                result_data['问题类型'] = str(issue.fields.issuetype)
-                result_data['标识'] = issue.key
-                result_data['主题'] = issue.fields.summary
-                result_data['经办人'] = issue.fields.assignee.displayName
-                result_data['报告人'] = issue.fields.reporter.displayName
-                result_data['优先级'] = issue.fields.priority.name
-                result_data['状态'] = issue.fields.status.name
-
-                resolution = issue.fields.resolution
-                if resolution is None:
-                    result_data['解决结果'] = '未解决'
-                else:
-                    result_data['解决结果'] = resolution.name
-                result_data['创建'] = issue.fields.created
-                result_data['更新'] = issue.fields.updated
-
-                component = issue.fields.components
-                if len(component) > 0:
-                    result_data['模块'] = component[0].name
-                else:
-                    result_data['模块'] = str(component)
-
-                DI = issue.fields.customfield_12202
-                if DI is None:
-                    result_data['DI统计'] = DI
-                else:
-                    result_data['DI统计'] = DI.value
-
-                tag = issue.fields.customfield_12202
-                if tag is None:
-                    result_data['标签'] = tag
-                else:
-                    result_data['标签'] = tag.value
-
-                result_data['产品机型'] = issue.fields.customfield_10900
-                result['data'].append(result_data)
-                # 运营问题
-                if result_data['模块'] == '应用商店':
-                    store_data = {}
-                    store_data['项目'] = projectId
-                    store_data['问题类型'] = str(issue.fields.issuetype)
-                    store_data['标识'] = issue.key
-                    store_data['主题'] = issue.fields.summary
-                    store_data['经办人'] = issue.fields.assignee.displayName
-                    store_data['报告人'] = issue.fields.reporter.displayName
-                    store_data['优先级'] = issue.fields.priority.name
-                    store_data['状态'] = issue.fields.status.name
+                model_jira_temp = issue.fields.customfield_10900.split(';')
+                if '' in model_jira_temp:
+                    model_jira_temp.remove('')
+                if set(model_jira_temp) & set(model.split(';')) or model == "":
+                    # 遗留问题列表
+                    result_data = {}
+                    result_data['项目'] = projectId
+                    result_data['问题类型'] = str(issue.fields.issuetype)
+                    result_data['标识'] = issue.key
+                    result_data['主题'] = issue.fields.summary
+                    result_data['经办人'] = issue.fields.assignee.displayName
+                    result_data['报告人'] = issue.fields.reporter.displayName
+                    result_data['优先级'] = issue.fields.priority.name
+                    result_data['状态'] = issue.fields.status.name
 
                     resolution = issue.fields.resolution
                     if resolution is None:
-                        store_data['解决结果'] = '未解决'
+                        result_data['解决结果'] = '未解决'
                     else:
-                        store_data['解决结果'] = resolution.name
-                    store_data['创建'] = issue.fields.created
-                    store_data['更新'] = issue.fields.updated
+                        result_data['解决结果'] = resolution.name
+                    result_data['创建'] = issue.fields.created
+                    result_data['更新'] = issue.fields.updated
 
                     component = issue.fields.components
                     if len(component) > 0:
-                        store_data['模块'] = component[0].name
+                        result_data['模块'] = component[0].name
                     else:
-                        store_data['模块'] = str(component)
+                        result_data['模块'] = str(component)
 
                     DI = issue.fields.customfield_12202
                     if DI is None:
-                        store_data['DI统计'] = DI
+                        result_data['DI统计'] = DI
                     else:
-                        store_data['DI统计'] = DI.value
+                        result_data['DI统计'] = DI.value
 
                     tag = issue.fields.customfield_12202
                     if tag is None:
-                        store_data['标签'] = tag
+                        result_data['标签'] = tag
                     else:
-                        store_data['标签'] = tag.value
+                        result_data['标签'] = tag.value
 
-                    store_data['产品机型'] = issue.fields.customfield_10900
-                    store_list.append(store_data)
-                # UE问题
-                if result_data['问题类型'] == 'UE Bug':
-                    ue_data = {}
-                    ue_data['项目'] = projectId
-                    ue_data['问题类型'] = str(issue.fields.issuetype)
-                    ue_data['标识'] = issue.key
-                    ue_data['主题'] = issue.fields.summary
-                    ue_data['经办人'] = issue.fields.assignee.displayName
-                    ue_data['报告人'] = issue.fields.reporter.displayName
-                    ue_data['优先级'] = issue.fields.priority.name
-                    ue_data['状态'] = issue.fields.status.name
+                    result_data['产品机型'] = issue.fields.customfield_10900
+                    result['data'].append(result_data)
+                    # 运营问题
+                    if result_data['模块'] == '应用商店':
+                        store_data = {}
+                        store_data['项目'] = projectId
+                        store_data['问题类型'] = str(issue.fields.issuetype)
+                        store_data['标识'] = issue.key
+                        store_data['主题'] = issue.fields.summary
+                        store_data['经办人'] = issue.fields.assignee.displayName
+                        store_data['报告人'] = issue.fields.reporter.displayName
+                        store_data['优先级'] = issue.fields.priority.name
+                        store_data['状态'] = issue.fields.status.name
 
-                    resolution = issue.fields.resolution
-                    if resolution is None:
-                        ue_data['解决结果'] = '未解决'
-                    else:
-                        ue_data['解决结果'] = resolution.name
-                    ue_data['创建'] = issue.fields.created
-                    ue_data['更新'] = issue.fields.updated
+                        resolution = issue.fields.resolution
+                        if resolution is None:
+                            store_data['解决结果'] = '未解决'
+                        else:
+                            store_data['解决结果'] = resolution.name
+                        store_data['创建'] = issue.fields.created
+                        store_data['更新'] = issue.fields.updated
 
-                    component = issue.fields.components
-                    if len(component) > 0:
-                        ue_data['模块'] = component[0].name
-                    else:
-                        ue_data['模块'] = str(component)
+                        component = issue.fields.components
+                        if len(component) > 0:
+                            store_data['模块'] = component[0].name
+                        else:
+                            store_data['模块'] = str(component)
 
-                    DI = issue.fields.customfield_12202
-                    if DI is None:
-                        ue_data['DI统计'] = DI
-                    else:
-                        ue_data['DI统计'] = DI.value
+                        DI = issue.fields.customfield_12202
+                        if DI is None:
+                            store_data['DI统计'] = DI
+                        else:
+                            store_data['DI统计'] = DI.value
 
-                    tag = issue.fields.customfield_12202
-                    if tag is None:
-                        ue_data['标签'] = tag
-                    else:
-                        ue_data['标签'] = tag.value
+                        tag = issue.fields.customfield_12202
+                        if tag is None:
+                            store_data['标签'] = tag
+                        else:
+                            store_data['标签'] = tag.value
 
-                    ue_data['产品机型'] = issue.fields.customfield_10900
-                    ue_list.append(ue_data)
+                        store_data['产品机型'] = issue.fields.customfield_10900
+                        store_list.append(store_data)
+                    # UE问题
+                    if result_data['问题类型'] == 'UE Bug':
+                        ue_data = {}
+                        ue_data['项目'] = projectId
+                        ue_data['问题类型'] = str(issue.fields.issuetype)
+                        ue_data['标识'] = issue.key
+                        ue_data['主题'] = issue.fields.summary
+                        ue_data['经办人'] = issue.fields.assignee.displayName
+                        ue_data['报告人'] = issue.fields.reporter.displayName
+                        ue_data['优先级'] = issue.fields.priority.name
+                        ue_data['状态'] = issue.fields.status.name
+
+                        resolution = issue.fields.resolution
+                        if resolution is None:
+                            ue_data['解决结果'] = '未解决'
+                        else:
+                            ue_data['解决结果'] = resolution.name
+                        ue_data['创建'] = issue.fields.created
+                        ue_data['更新'] = issue.fields.updated
+
+                        component = issue.fields.components
+                        if len(component) > 0:
+                            ue_data['模块'] = component[0].name
+                        else:
+                            ue_data['模块'] = str(component)
+
+                        DI = issue.fields.customfield_12202
+                        if DI is None:
+                            ue_data['DI统计'] = DI
+                        else:
+                            ue_data['DI统计'] = DI.value
+
+                        tag = issue.fields.customfield_12202
+                        if tag is None:
+                            ue_data['标签'] = tag
+                        else:
+                            ue_data['标签'] = tag.value
+
+                        ue_data['产品机型'] = issue.fields.customfield_10900
+                        ue_list.append(ue_data)
 
             download_id = time.strftime("%Y%m%d%H%M%S", time.localtime())
-            save_excel(download_id, result['data'], store_list, ue_list)
+            save_excel(username, projectId, model, download_id, result['data'], store_list, ue_list)
             result['success'] = True
             result['message'] = 'test data'
             result['downloadId'] = download_id
@@ -179,7 +187,7 @@ def search_data(request):
         return render(request, 'jira/jira-search-data.html')
 
 
-def save_excel(download_id, data, data_store, data_ue):
+def save_excel(username, projectId, model, download_id, data, data_store, data_ue):
     data_list = []
     data_store_list = []
     data_ue_list = []
@@ -195,8 +203,8 @@ def save_excel(download_id, data, data_store, data_ue):
     data_ue_list.extend(data_ue)
 
     # wb = Workbook()
-    dest_filename = "/var/Data/JiraFile/" + download_id + u"软件成熟度评估报告.xlsx"
-    # dest_filename = dest_filename.decode('utf-8')
+    # dest_filename = "/var/Data/JiraFile/" + download_id + u"软件成熟度评估报告.xlsx"
+    dest_filename = settings.BASE_DIR + "/djangoWeb/static/JiraFile/" + download_id + u"软件成熟度评估报告.xlsx"
     source_filename = settings.BASE_DIR + "/djangoWeb/static/JiraModel.xlsx"
     print(dest_filename)
     wb = load_workbook(source_filename)
@@ -388,11 +396,9 @@ def save_excel(download_id, data, data_store, data_ue):
     ws4.auto_filter.ref = "A1:O1"  # 为表头增加过滤功能
 
     wb.save(filename=dest_filename)
-    # response = HttpResponse(content_type='application/vnd.ms-excel;charset=utf-8;name="' + dest_filename + '"')
-    # response['Content-Disposition'] = 'attachment; filename=ttttt'
-    # # 保存返回
-    # wb.save(response)
-    # return response
+
+    jira_search_record = JiraSearchRecord(username=username, project_id=projectId, model=model, download_id=download_id)
+    jira_search_record.save()
 
 
 def file_iterator(file, chunk_size=512):
@@ -411,16 +417,25 @@ def file_download(request):
     # file = "/root/JiraFile/www.xls"
     download_id = request.GET.get('downloadId', '')
     if download_id != "":
-        file = "/var/Data/JiraFile/" + download_id + u"软件成熟度评估报告.xlsx"
-        # file = unicode(file, "GB2312")
+        file = settings.BASE_DIR + "/djangoWeb/static/JiraFile/" + download_id + u"软件成熟度评估报告.xlsx"
         file_name = file.split('/')[-1]
         print(file_name)
         response = StreamingHttpResponse(file_iterator(file))
         response['Content-Type'] = 'application/octet-stream'
         response['Content-Disposition'] = 'attachment;filename="{0}"'.format(urlquote(file_name))
+
+        record = JiraSearchRecord.objects.get(download_id=download_id)
+        jira_download_record = JiraDownloadRecord(search_record=record)
+        jira_download_record.save()
+
         return response
     else:
         return HttpResponse("要下载的文件不存在！！！")
 
+
+# 导出记录
+def import_record(request):
+    record = JiraDownloadRecord.objects.all()
+    print(record)
 
 

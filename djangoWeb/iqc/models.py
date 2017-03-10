@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib import admin
 
 
 # Create your models here.
@@ -37,4 +36,7 @@ class IQCUploadRecord(models.Model):
     person = models.ForeignKey(User, related_name='person_upload_record')
     upload_num = models.IntegerField(verbose_name="上传数量")
     upload_time = models.DateTimeField(auto_now_add=True, verbose_name="上传时间")
+
+    class Meta:
+        ordering = ['upload_time']
 

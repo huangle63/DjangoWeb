@@ -13,7 +13,7 @@
     <link type="text/css" href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link type="text/css" href="{% static 'css/bootcamp.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/iqc.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/alertify.min.css' %}">
 
     {% block head %}
     {% endblock head %}
@@ -35,11 +35,12 @@
                 </div>
                 <div class="collapse navbar-collapse" id="menu">
                     <ul class="nav navbar-nav">
-                        {% if not user.is_anonymous %}
-                            <li>
+                            <li class="active">
                                 <a href="{% url 'jira-search-data' %}" class="navbar-link">查询数据</a>
                             </li>
-                        {% endif %}
+                            <li>
+                                <a href="{% url 'jira-import-record' %}" class="navbar-link">导出记录</a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -54,6 +55,9 @@
 
     <script type="text/javascript" src="{% static 'js/jquery-1.12.3.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!--alertify.js 用于弹出自定义警告框-->
+    <script src="{% static 'js/alertify.min.js' %}"></script>
+
 {% block scripts %}
 {% endblock scripts %}
 
